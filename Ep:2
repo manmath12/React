@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <!-- <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script> -->
+
+    <div id="root">
+        <h1>hello</h1>
+    </div>
+
+    <script type="module" src="./App.js"> </script>
+
+    
+</body>
+</html>
+
+
+
+import React from "react";
+import ReactDOM from "react-dom/client";
+const heading = React.createElement("h1",{id:"heading"},"hello wprld from insight");
+        
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+        
+root.render(heading)
+
+
+.gitignore file :
+/node_modules
+/dist
+.parcel-cache
+
+package.json file:
+
+{
+  "name": "namaste-react-again",
+  "version": "1.0.0",
+  "description": "this is namaste react by akshay saini",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manmath12/React.git"
+  },
+  "keywords": [
+    "react",
+    "namaste-react"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/manmath12/React/issues"
+  },
+  "homepage": "https://github.com/manmath12/React#readme",
+  "devDependencies": {
+    "parcel": "^2.12.0",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}
+
+
