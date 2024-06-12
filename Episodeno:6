@@ -1,0 +1,296 @@
+App.js
+
+import React from "react";
+import ReactDOM from "react-dom/client";
+import Header from "./components/Header";
+import Body from "./components/Body";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import About from "./components/About";
+
+const AppLayout = ()=>{
+
+
+   return(
+    <div className="app">
+      <Header/>
+      <Body/>
+    </div>
+   )
+}
+
+const appRouter = createBrowserRouter([
+  {
+    path:"/",
+    element:<AppLayout/>
+
+  },
+  {
+    path:"/about",
+    element:<About/>
+  }
+])
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<AppLayout/>)
+
+
+
+
+body.js:
+
+import resList from "../utils/mockData";
+import ResturantCard from "./ResturantCard";
+import { useEffect, useState } from "react";
+import Shimmer from "./Shimmer";
+
+ 
+
+let listofResturantss = [ {
+  data: {
+    id: "74453",
+    name: "Domino's Pizza",
+    cuisines: ["Pizzas"],
+    costForTwo: 40000,
+    deliveryTime: 45,
+    avgRating: "4.0",
+    cloudinaryImageId: "bz9zkh2aqywjhpankb07"
+  }
+},
+{
+  data: {
+    id: "74454",
+    name: "Pizza Hut",
+    cuisines: ["Pizzas"],
+    costForTwo: 50000,
+    deliveryTime: 30,
+    avgRating: "4.2",
+    cloudinaryImageId: "ldtibwymvzehvmdwl8la"
+  }
+},
+{
+  data: {
+    id: "74455",
+    name: "Papa John's",
+    cuisines: ["Pizzas"],
+    costForTwo: 35000,
+    deliveryTime: 40,
+    avgRating: "3.8",
+    cloudinaryImageId: "nyp7yrzwc1dc2xqfkydk"
+  }
+},
+{
+  data: {
+    id: "74456",
+    name: "Little Caesars",
+    cuisines: ["Pizzas"],
+    costForTwo: 30000,
+    deliveryTime: 35,
+    avgRating: "4.1",
+    cloudinaryImageId: "spd3y5gok3vvwqulgmda"
+  }
+},
+{
+  data: {
+    id: "74457",
+    name: "California Pizza Kitchen",
+    cuisines: ["Pizzas"],
+    costForTwo: 60000,
+    deliveryTime: 50,
+    avgRating: "4.5",
+    cloudinaryImageId: "bvr70adr30ejyr5ua79k"
+  }
+},
+{
+  data: {
+    id: "74458",
+    name: "Marco's Pizza",
+    cuisines: ["Pizzas"],
+    costForTwo: 45000,
+    deliveryTime: 55,
+    avgRating: "4.3",
+    cloudinaryImageId: "oxsb5mr1xsmhnxhunjsc"
+  }
+},
+
+{
+  data: {
+    id: "74459",
+    name: "Marco's Pizza",
+    cuisines: ["Pizzas"],
+    costForTwo: 45000,
+    deliveryTime: 55,
+    avgRating: "4.3",
+    cloudinaryImageId: "agkm7cflq72tkualhstb"
+  }
+},
+
+{
+  data: {
+    id: "74460",
+    name: "Marco's Pizza",
+    cuisines: ["Pizzas"],
+    costForTwo: 45000,
+    deliveryTime: 55,
+    avgRating: "4.3",
+    cloudinaryImageId: "jegpumsjcmomksbr2sxr"
+  }
+}];
+
+//this is the useEffect hook to call the api and fetch data from it
+const Body =()=>{
+
+  const [listofResturants,setlistofResturants]=useState(listofResturantss);
+
+  const [fillerted_res, setfillerted_res]=useState(listofResturantss);
+
+  const [searchText, setsearchText]=useState("");
+
+  // useEffect(()=>{
+  //   fetchData();
+  // }, []);
+
+  // const fetchData = async() =>
+  //   {
+  //     const data =await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.61610&lng=73.72860&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+    
+
+  //   const json = await data.json();
+  //   console.log(json);
+  //   //optional chaining
+  //   setlistofResturants(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+  //   };
+
+    //conditional rendering 
+
+    if(listofResturants.length==0)
+      {
+        return <Shimmer/>;
+      }  
+
+
+    return(
+      <div className="body">
+
+        <div className="filter"> 
+
+          <div className="search">
+
+            <input 
+            type="text"
+             className="search-box"
+              value={searchText} 
+              onChange={(e)=>{
+               setsearchText(e.target.value);
+            }}/>
+              <button onClick={()=>{
+                
+                //filter the resturant cards and update the UI
+             const filtered_res = listofResturants.filter(
+              (res)=>res.data.name.toLowerCase().includes(searchText.toLowerCase()))
+              setfillerted_res(filtered_res);
+            }}>search</button>
+            
+             </div>
+
+
+        <button className="filter-btn" onClick={
+
+          ()=>{
+
+             filtered_list = listofResturants.filter((res)=>res.data.avgRating>4);
+             setfillerted_res(filtered_list);
+
+          }}>
+            
+            Top Rated Resturant </button>
+         </div>
+
+        <div className="res-container">  
+        
+         {
+           //writing js map function to loop over all resturants
+
+           fillerted_res.map((restaurant) =>( 
+
+            <ResturantCard key={restaurant.data.id} resData={restaurant}/>
+           ))
+
+        } 
+       
+
+        </div>
+
+
+      </div>
+
+    )
+}
+
+export default Body;
+
+
+header.js:
+
+import { LOGO_URL } from "../utils/constants";
+import { useState,useEffect} from "react";
+
+const Header =()=>{
+
+    const [btnnameeReact, setbtnnameeReact]= useState("Login");
+
+    // useEffect(()=>{
+
+    //     console.log("useeffect called");
+
+    // },[btnnameeReact]) experrimental code
+
+    return(
+        <div className="header">
+            <div>
+                <img className="logo" src={LOGO_URL}/>
+            </div>
+            <div className="nav-items">
+                     <ul>
+                        <li>Home</li>
+                        <li>About Us</li>
+                        <li>Contact US</li>
+                        <li>Cart</li>
+                        <button className="login" onClick={()=>{
+                            if( btnnameeReact=="Login"? setbtnnameeReact("Logout"):setbtnnameeReact("Login"));
+                        }}>
+                            
+                        {btnnameeReact}  
+                        </button>
+                     </ul>
+            </div>
+
+        </div>
+    )
+}
+
+export default Header;
+
+
+
+ResturantCard.js:
+
+import CDN_URL from "../utils/constants";
+import { stylecard } from "./stylecard";
+const ResturantCard = (props)=>{
+    const {resData}=props;
+    const {cloudinaryImageId,name,cuisines,avgRating,costForTwo,deliveryTime}= resData?.data;
+    return(
+        <div className="res-card" style={stylecard}>
+            <img className="res-logo" src={CDN_URL + cloudinaryImageId}/>
+            <h3>{name}</h3>
+            <h4>{cuisines.join(",")}</h4>
+            <h4>{avgRating}stars</h4>
+            <h4>{costForTwo/100}</h4>
+            <h4>{deliveryTime}minutes</h4>
+        </div>      
+    )
+}
+
+export default ResturantCard;
+
+
